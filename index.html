@@ -40,24 +40,54 @@
 
   <script>
     // Timer on page
-    // let quizTimer = 120
+    // let quizTimer = 60000
+   
     // setInterval(() => {
-    //   count--
+    //   clearInterval(clock)
 
-    //   if (quizTimer === questions.length) {
-    //     count = 120
-    //   }
+
     //   document.getElementById('questions').questions = questions[count]
-    // }, 120000);
+    // }, 1000);
 
 
     // Button clicked to start quiz
+    
+    const theQuestions = [
+        {
+          exam: "What does !enter do in an empty html file?",
+          answers: ["It gives you a boiler plate", "Starts a function", "Tells the user it's important", "Puts all the font in caps lock",],
+          correctAnswer: "It gives you a boiler plate"
+        },
+        {
+          exam: "Where does the bootstrap css cdn go?",
+          answers: ["In the div", "Between the body tags", "In the header tags", "On the css.style page",],
+          correctAnswer: "In the header tags"
+        },
+        {
+          exam: "What does parseInt do?",
+          answers: ["Lowercases code", "Capitlizes code", "Intercepts the parantheses", "Makes a string a number",],
+          correctAnswer: "Makes a string a number"
+        },
+        {
+          exam: "What must you always do in Javascript if you have a button inside a form?",
+          answers: ["event.preventDefault()", "Have a <ul>", "Create a for loop", "setTimeout()",],
+          correctAnswer: "event.preventDefault()"
+        },
+        {
+          exam: "What is a string?",
+          answers: ["A boolean", "A number", "A piece of text", "A fact",],
+          correctAnswer: "A piece of text"
+        },
+      ]
+    
+    
     let index = 0
+    let points = 0
 
     const myCard = document.getElementById('myCard')
 
     document.getElementById('start').addEventListener('click', () => {
-      display(index)
+      display()
     })
 
     function display() {
@@ -65,62 +95,40 @@
       let questions = document.createElement('h2')
       myCard.append(questions)
       questions.textContent = (theQuestions[index].exam)
-
+      console.log(index)
 
       for (let i = 0; i < theQuestions[index].answers.length; i++) {
         let answers = document.createElement('button')
+        answers.classList.add('answers')
         answers.setAttribute('index', index)
         myCard.append(answers)
         answers.textContent = (theQuestions[index].answers[i])
       }
-      index++
+      
     }
 
-    myCard.addEventListener('click', event =>{
+    document.addEventListener('click', event =>{
     event.preventDefault()
-
-    if (event.target.matches('button')) {
+      
+    if (event.target.classList.contains('answers')) {
       // console.log(event.target.textContent)
       let question = event.target.getAttribute('index')
       if (event.target.textContent === theQuestions[question].correctAnswer) {
         console.log('winner')
+         index++ 
+         display()
       }
       else {
         console.log('loser')
+        index++
+        display()
+
       }
+     
     }
   
   })
 
-
-    
-    const theQuestions = [
-      {
-        exam: "What does !enter do in an html file?",
-        answers: ["It gives you a boiler plate", "Starts a function", "Tells the user it's important", "Puts all the font in caps lock",],
-        correctAnswer: "1"
-      },
-      {
-        exam: "example",
-        answers: ["1", "2", "3", "4",],
-        correctAnswer: "2"
-      },
-      {
-        exam: "example",
-        answers: ["1", "2", "3", "4",],
-        correctAnswer: "3"
-      },
-      {
-        exam: "example",
-        answers: ["1", "2", "3", "4",],
-        correctAnswer: "4"
-      },
-      {
-        exam: "example",
-        answers: ["1", "2", "3", "4",],
-        correctAnswer: "1"
-      },
-    ]
 
   </script>
 </body>
