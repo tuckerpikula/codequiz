@@ -22,12 +22,12 @@
     <div id="questionsDisplayed">
       <h1>Code Quiz</h1>
       <p>Hello and welcome to my code quiz. You will have 60 seconds to answer 5 questions. If you get a question wrong,
-        you lose 5 seconds. Good luck and have fun!</p>
+        you lose 10 seconds. Good luck and have fun!</p>
       <button id="start">Start Quiz</button>
     </div>
   </div>
   <div id="timeDiv">60</div>
-  
+
   <script>
     // Questions on the quiz
     const theQuestions = [
@@ -58,17 +58,14 @@
       },
     ]
 
-    // Timer on page
     let time = 60
     let wrong = 10
-    let interval = 0 
+    let interval = 0
     let index = 0
     let points = 0
     let timeDiv = document.getElementById('timeDiv')
+    let questionsDisplayed = document.getElementById('questionsDisplayed')
 
-
-
-    const questionsDisplayed = document.getElementById('questionsDisplayed')
 
     document.getElementById('start').addEventListener('click', () => {
       if (interval === 0) {
@@ -76,10 +73,9 @@
           time--
           if (time <= 0) {
             clearInterval(clock)
-            // fin()
-            // timeDiv.textContent = "Finish!"
+            finish()
           }
-           document.getElementById('timeDiv').textContent = `${time}`
+          document.getElementById('timeDiv').textContent = `${time}`
         }, 1000);
       }
       display()
@@ -90,7 +86,7 @@
       let questions = document.createElement('h2')
       questionsDisplayed.append(questions)
       questions.textContent = (theQuestions[index].exam)
-      console.log(index)
+
 
       for (let i = 0; i < theQuestions[index].answers.length; i++) {
         let answers = document.createElement('button')
@@ -112,7 +108,7 @@
         let question = event.target.getAttribute('index')
         if (event.target.textContent === theQuestions[question].correctAnswer) {
           index++
-          points = points + 5
+          points = points + 1
           display()
         }
         else {
@@ -126,6 +122,17 @@
 
     })
 
+    function finish() {
+      questionsDisplayed.innerHTML = ''
+      timeDiv.style.display = ''
+      if (index > 5) {
+        let fin = document.createElement('h2')
+        fin.textContent = "The quiz is over!"
+      }
+    }
+    
+    
+    
     // document.addEventListener('click', event => {
     //   if (index > 5)
     //     document.getElementById('questionsDisplayed').textContent = 'Game Over!'
