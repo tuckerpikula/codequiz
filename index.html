@@ -25,6 +25,7 @@
         you lose 10 seconds. Good luck and have fun!</p>
       <button id="start">Start Quiz</button>
     </div>
+    <div id="points"></div>
   </div>
   <div id="timeDiv">60</div>
 
@@ -102,22 +103,23 @@
 
     document.addEventListener('click', event => {
       event.preventDefault()
-
+      
       if (event.target.classList.contains('answers')) {
         // console.log(event.target.textContent)
         let question = event.target.getAttribute('index')
+        let score = document.getElementById('points').textContent = `Score: ${points} correct out of 5`
         if (event.target.textContent === theQuestions[question].correctAnswer) {
-          index++
           points = points + 1
+          index++
           display()
         }
         else {
           index++
           time = time - wrong
           display()
-
+          
         }
-
+        console.log(score)
       }
 
     })
@@ -125,7 +127,7 @@
     function finish() {
       questionsDisplayed.innerHTML = ''
       timeDiv.style.display = ''
-      if (index > 5) {
+      if (theQuestions.answers.length > 5) {
         let fin = document.createElement('h2')
         fin.textContent = "The quiz is over!"
       }
