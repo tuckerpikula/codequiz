@@ -24,10 +24,10 @@
       <p>Hello and welcome to my code quiz. You will have 60 seconds to answer 5 questions. If you get a question wrong,
         you lose 5 seconds. Good luck and have fun!</p>
       <button id="start">Start Quiz</button>
-      <div id="timeDiv"></div>
     </div>
   </div>
-
+  <div id="timeDiv">60</div>
+  
   <script>
     // Questions on the quiz
     const theQuestions = [
@@ -60,7 +60,7 @@
 
     // Timer on page
     let time = 60
-    let wrong = 5
+    let wrong = 10
     let interval = 0 
     let index = 0
     let points = 0
@@ -74,14 +74,12 @@
       if (interval === 0) {
         let clock = setInterval(() => {
           time--
-          timeDiv.textContent = "Time: " + time
-          console.log(timeDiv)
           if (time <= 0) {
             clearInterval(clock)
             // fin()
             // timeDiv.textContent = "Finish!"
           }
-          console.log(time)
+           document.getElementById('timeDiv').textContent = `${time}`
         }, 1000);
       }
       display()
@@ -119,7 +117,7 @@
         }
         else {
           index++
-          time = time - 5
+          time = time - wrong
           display()
 
         }

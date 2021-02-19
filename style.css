@@ -26,3 +26,9 @@ p {
   margin-top: 5%;
   margin-left: 40%;
 }
+
+#timeDiv {
+  margin-left: 50%;
+  margin-top: 5%;
+  font-size: 30px;
+}
