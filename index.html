@@ -26,8 +26,8 @@
         seconds. Good luck!
       </h2>
       <button id="start">Start Quiz!</button>
-
     </div>
+    <div id="points"></div>
   </div>
   ˝
 
@@ -40,14 +40,18 @@
 
   <script>
     // Timer on page
-    // let quizTimer = 60000
-   
-    // setInterval(() => {
-    //   clearInterval(clock)
+      let time = 60000
 
+      let clock = setInterval(() => {
+        
+        time = time - 1000
 
-    //   document.getElementById('questions').questions = questions[count]
-    // }, 1000);
+        if(time <=0) {
+          clearInterval(clock)
+          
+        }
+
+      }, 1000);
 
 
     // Button clicked to start quiz
@@ -103,6 +107,8 @@
         answers.setAttribute('index', index)
         myCard.append(answers)
         answers.textContent = (theQuestions[index].answers[i])
+
+     
       }
       
     }
@@ -114,13 +120,14 @@
       // console.log(event.target.textContent)
       let question = event.target.getAttribute('index')
       if (event.target.textContent === theQuestions[question].correctAnswer) {
-        console.log('winner')
+        
          index++ 
+         points++
          display()
       }
       else {
-        console.log('loser')
         index++
+        time
         display()
 
       }
@@ -128,6 +135,24 @@
     }
   
   })
+
+    document.addEventListener('click', event => {
+      if (index > 5)
+      document.getElementById('myCard').textContent = 'Game Over!'
+      // document.getElementById('end').innerHTML = `
+      // <div>
+      //   <h2>Final Score </h2>
+      //    <p>${points}</p>
+      // </div>
+      // <form>
+      // <p>
+      //   <label for="initials">Enter Initials</label>
+      //   <input type="submit name="initials" id="submit"> 
+      // </p>
+      //   <button id="submit">Submit</button>
+      // </form>
+      // `
+    })
 
 
   </script>
