@@ -19,68 +19,71 @@
   </div>
 
   <div id="wrapper">
-    <div id="time"></div>
     <div id="questionsDisplayed">
       <h1>Code Quiz</h1>
-      <p>Hello and welcome to my code quiz.  You will have 60 seconds to answer 5 questions. If you get a question wrong, you lose 5 seconds.  Good luck and have fun!</p>
+      <p>Hello and welcome to my code quiz. You will have 60 seconds to answer 5 questions. If you get a question wrong,
+        you lose 5 seconds. Good luck and have fun!</p>
       <button id="start">Start Quiz</button>
+      <div id="timeDiv"></div>
     </div>
   </div>
 
   <script>
-    // Timer on page
-      let time = 60000
-      let wrong = 5000
-
-      let clock = setInterval(() => {
-        
-       
-
-        if(time <=0) {
-          clearInterval(clock)
-          
-        }
-
-      }, 1000);
-
-      // Questions on the quiz
+    // Questions on the quiz
     const theQuestions = [
-        {
-          exam: "What does !enter do in an empty html file?",
-          answers: ["It gives you a boiler plate", "Starts a function", "Tells the user it's important", "Puts all the font in caps lock",],
-          correctAnswer: "It gives you a boiler plate"
-        },
-        {
-          exam: "Where does the bootstrap css cdn go?",
-          answers: ["In the div", "Between the body tags", "In the header tags", "On the css.style page",],
-          correctAnswer: "In the header tags"
-        },
-        {
-          exam: "What does parseInt do?",
-          answers: ["Lowercases code", "Capitlizes code", "Intercepts the parantheses", "Makes a string a number",],
-          correctAnswer: "Makes a string a number"
-        },
-        {
-          exam: "What must you always do in Javascript if you have a button inside a form?",
-          answers: ["event.preventDefault()", "Have a <ul>", "Create a for loop", "setTimeout()",],
-          correctAnswer: "event.preventDefault()"
-        },
-        {
-          exam: "What is a string?",
-          answers: ["A boolean", "A number", "A piece of text", "A fact",],
-          correctAnswer: "A piece of text"
-        },
-      ]
-    
-    
+      {
+        exam: "What does !enter do in an empty html file?",
+        answers: ["It gives you a boiler plate", "Starts a function", "Tells the user it's important", "Puts all the font in caps lock",],
+        correctAnswer: "It gives you a boiler plate"
+      },
+      {
+        exam: "Where does the bootstrap css cdn go?",
+        answers: ["In the div", "Between the body tags", "In the header tags", "On the css.style page",],
+        correctAnswer: "In the header tags"
+      },
+      {
+        exam: "What does parseInt do?",
+        answers: ["Lowercases code", "Capitlizes code", "Intercepts the parantheses", "Makes a string a number",],
+        correctAnswer: "Makes a string a number"
+      },
+      {
+        exam: "What must you always do in Javascript if you have a button inside a form?",
+        answers: ["event.preventDefault()", "Have a <ul>", "Create a for loop", "setTimeout()",],
+        correctAnswer: "event.preventDefault()"
+      },
+      {
+        exam: "What is a string?",
+        answers: ["A boolean", "A number", "A piece of text", "A fact",],
+        correctAnswer: "A piece of text"
+      },
+    ]
+
+    // Timer on page
+    let time = 60
+    let wrong = 5
+    let interval = 0 
     let index = 0
     let points = 0
- 
-    
+    let timeDiv = document.getElementById('timeDiv')
+
+
 
     const questionsDisplayed = document.getElementById('questionsDisplayed')
 
     document.getElementById('start').addEventListener('click', () => {
+      if (interval === 0) {
+        let clock = setInterval(() => {
+          time--
+          timeDiv.textContent = "Time: " + time
+          console.log(timeDiv)
+          if (time <= 0) {
+            clearInterval(clock)
+            // fin()
+            // timeDiv.textContent = "Finish!"
+          }
+          console.log(time)
+        }, 1000);
+      }
       display()
     })
 
@@ -98,38 +101,37 @@
         questionsDisplayed.append(answers)
         answers.textContent = (theQuestions[index].answers[i])
 
-     
+
       }
-      
+
     }
-
-    document.addEventListener('click', event =>{
-    event.preventDefault()
-      
-    if (event.target.classList.contains('answers')) {
-      // console.log(event.target.textContent)
-      let question = event.target.getAttribute('index')
-      if (event.target.textContent === theQuestions[question].correctAnswer) {
-
-         index++ 
-         points++
-         display()
-      }
-      else {
-        index++
-        time
-        display()
-
-      }
-     
-    }
-  
-  })
 
     document.addEventListener('click', event => {
-      if (index > 5)
-      document.getElementById('questionsDisplayed').textContent = 'Game Over!'
-      // document.getElementById('end').innerHTML = `
+      event.preventDefault()
+
+      if (event.target.classList.contains('answers')) {
+        // console.log(event.target.textContent)
+        let question = event.target.getAttribute('index')
+        if (event.target.textContent === theQuestions[question].correctAnswer) {
+          index++
+          points = points + 5
+          display()
+        }
+        else {
+          index++
+          time = time - 5
+          display()
+
+        }
+
+      }
+
+    })
+
+    // document.addEventListener('click', event => {
+    //   if (index > 5)
+    //     document.getElementById('questionsDisplayed').textContent = 'Game Over!'
+    //   // document.getElementById('end').innerHTML = `
       // <div>
       //   <h2>Final Score </h2>
       //    <p>${points}</p>
@@ -141,8 +143,8 @@
       // </p>
       //   <button id="submit">Submit</button>
       // </form>
-      // `
-    })
+    //   // `
+    // })
 
 
   </script>
