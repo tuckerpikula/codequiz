@@ -72,7 +72,7 @@
       if (interval === 0) {
         let clock = setInterval(() => {
           time--
-          if (time <= 0) {
+          if (time <= 0 || index >= 5) {
             clearInterval(clock)
             finish()
           }
@@ -83,27 +83,32 @@
     })
 
     function display() {
-      questionsDisplayed.innerHTML = ''
-      let questions = document.createElement('h2')
-      questionsDisplayed.append(questions)
-      questions.textContent = (theQuestions[index].exam)
+
+      if (index >= 5) {
+        finish()
+      } else {
+        questionsDisplayed.innerHTML = ''
+        let questions = document.createElement('h2')
+        questionsDisplayed.append(questions)
+        questions.textContent = (theQuestions[index].exam)
 
 
-      for (let i = 0; i < theQuestions[index].answers.length; i++) {
-        let answers = document.createElement('button')
-        answers.classList.add('answers')
-        answers.setAttribute('index', index)
-        questionsDisplayed.append(answers)
-        answers.textContent = (theQuestions[index].answers[i])
+        for (let i = 0; i < theQuestions[index].answers.length; i++) {
+          let answers = document.createElement('button')
+          answers.classList.add('answers')
+          answers.setAttribute('index', index)
+          questionsDisplayed.append(answers)
+          answers.textContent = (theQuestions[index].answers[i])
 
 
+
+        }
       }
-
     }
 
     document.addEventListener('click', event => {
       event.preventDefault()
-      
+
       if (event.target.classList.contains('answers')) {
         // console.log(event.target.textContent)
         let question = event.target.getAttribute('index')
@@ -118,7 +123,7 @@
           index++
           time = time - wrong
           display()
-          
+
         }
         console.log(points)
       }
@@ -128,14 +133,12 @@
     function finish() {
       questionsDisplayed.innerHTML = ''
       timeDiv.style.display = ''
-      if (theQuestions.answers.length > 5) {
-        let fin = document.createElement('h2')
-        fin.textContent = "The quiz is over!"
-      }
+      let fin = document.createElement('h2')
+      fin.textContent = "The quiz is over!"
     }
-    
-    
-    
+
+
+
     // document.addEventListener('click', event => {
     //   if (index > 5)
     //     document.getElementById('questionsDisplayed').textContent = 'Game Over!'
