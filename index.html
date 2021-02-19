@@ -107,9 +107,10 @@
       if (event.target.classList.contains('answers')) {
         // console.log(event.target.textContent)
         let question = event.target.getAttribute('index')
-        let score = document.getElementById('points').textContent = `Score: ${points} correct out of 5`
         if (event.target.textContent === theQuestions[question].correctAnswer) {
-          points = points + 1
+          points++
+          document.getElementById('points').textContent = `Score: ${points} correct out of 5`
+          // score = points++
           index++
           display()
         }
@@ -119,7 +120,7 @@
           display()
           
         }
-        console.log(score)
+        console.log(points)
       }
 
     })
